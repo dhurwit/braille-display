@@ -1,14 +1,9 @@
 
 # coding: utf-8
 
-# In[1]:
-
 import os
 import re
 import pandas as pd
-
-
-# In[3]:
 
 class Conversion:
     def __init__(self, filename):
@@ -96,25 +91,3 @@ class Conversion:
         
         print (self.brailleString)
         return self.brailleString
-    
-    
-    #def toCSV():
-        
-
-
-# text = Conversion('sampleText.txt')
-
-# In[4]:
-
-text = Conversion('sampleText.txt')
-
-
-# In[5]:
-
-text.toDots()
-
-
-# In[ ]:
-
-#write a visualization algorithm
-

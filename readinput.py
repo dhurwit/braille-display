@@ -72,7 +72,7 @@ def test():
             fsr_bits = readadc(fsr_adc, SPICLK, SPIMOSI, SPIMISO, SPICS)   
             bit_log.append(fsr_bits)
             print fsr_bits
-            time.sleep(0.2)
+            time.sleep(0.02)
     except KeyboardInterrupt:
         GPIO.cleanup()
         with open(datalog, "w+") as output:

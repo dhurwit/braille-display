@@ -1,8 +1,5 @@
 #!/usr/bin/env python
- 
-# Written by Limor "Ladyada" Fried for Adafruit Industries, (c) 2015
-# This code is released into the public domain
- 
+
 import time
 import os
 import RPi.GPIO as GPIO
@@ -63,24 +60,27 @@ GPIO.setup(SPICS, GPIO.OUT)
 fsr_adc = 0;
 bit_log = []
 
-filename = 'datalog.csv'
-datalog = os.path.join(os.getcwd(), filename)
+def read_data(hertz, filename, cycle_count):
+    datalog = os.path.join(os.getcwd(), filename)
+    sleep_time = (1.0 / hertz)
+    end_count = cycle_count * hertz
 
-def test():
     try:
-        while True:
+        for i in range (0, end_count):
             fsr_bits = readadc(fsr_adc, SPICLK, SPIMOSI, SPIMISO, SPICS)   
             bit_log.append(fsr_bits)
-            print fsr_bits
-            time.sleep(0.02)
+            time.sleep(sleep_time)
+
     except KeyboardInterrupt:
         GPIO.cleanup()
         with open(datalog, "w+") as output:
             writer = csv.writer(output, lineterminator = '\n')
             for val in bit_log:
                 writer.writerow([val])
-        pass 
-    
-keep_going = raw_input("Would you like to test?")
-if keep_going:
-    test()
+        pass
+
+    GPIO.cleanup()
+    with open(datalog, "w+") as output:
+        writer = csv.writer(output, lineterminator = '\n')
+        for val in bit_log:
+            writer.writerow([val])

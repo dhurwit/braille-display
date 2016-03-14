@@ -4,6 +4,7 @@ import time
 import os
 import RPi.GPIO as GPIO
 import csv
+import sys
 
 GPIO.setmode(GPIO.BCM)
 DEBUG = 1
@@ -60,24 +61,15 @@ GPIO.setup(SPICS, GPIO.OUT)
 fsr_adc = 0;
 bit_log = []
 
-def read_data(hertz, filename, cycle_count):
+def read_data(fsr_hertz, sol_hertz, filename, cycle_count):
     datalog = os.path.join(os.getcwd(), filename)
-    sleep_time = (1.0 / hertz)
-    end_count = cycle_count * hertz
-
-    try:
-        for i in range (0, end_count):
-            fsr_bits = readadc(fsr_adc, SPICLK, SPIMOSI, SPIMISO, SPICS)   
-            bit_log.append(fsr_bits)
-            time.sleep(sleep_time)
-
-    except KeyboardInterrupt:
-        GPIO.cleanup()
-        with open(datalog, "w+") as output:
-            writer = csv.writer(output, lineterminator = '\n')
-            for val in bit_log:
-                writer.writerow([val])
-        pass
+    sleep_time = (1.0 / fsr_hertz)
+    end_count = int(((cycle_count / sol_hertz) * fsr_hertz))
+    
+    for i in range (0, end_count):
+        fsr_bits = readadc(fsr_adc, SPICLK, SPIMOSI, SPIMISO, SPICS)   
+        bit_log.append(fsr_bits)
+        time.sleep(sleep_time)
 
     GPIO.cleanup()
     with open(datalog, "w+") as output:

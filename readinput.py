@@ -70,9 +70,11 @@ def read_data(fsr_hertz, sol_hertz, filename, cycle_count):
         fsr_bits = readadc(fsr_adc, SPICLK, SPIMOSI, SPIMISO, SPICS)   
         bit_log.append(fsr_bits)
         time.sleep(sleep_time)
+        print fsr_bits
 
     GPIO.cleanup()
     with open(datalog, "w+") as output:
+        print 'writing'
         writer = csv.writer(output, lineterminator = '\n')
         for val in bit_log:
             writer.writerow([val])

@@ -117,5 +117,23 @@ class Conversion:
                     self.sol2.append(y)
                 else:
                     self.sol2.append(y)
+
+        for n, i in enumerate(self.sol0):
+            if i == 1:
+                self.sol0[n] = True
+            else: 
+                self.sol0[n] = False
+                
+        for n, i in enumerate(self.sol1):
+            if i == 1:
+                self.sol1[n] = True
+            else: 
+                self.sol1[n] = False
+                
+        for n, i in enumerate(self.sol2):
+            if i == 1:
+                self.sol2[n] = True
+            else: 
+                self.sol2[n] = False                    
                     
         return self.sol0, self.sol1, self.sol2

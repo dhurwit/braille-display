@@ -1,9 +1,7 @@
-
 # coding: utf-8
 
 import os
 import re
-import pandas as pd
 
 class Conversion:
     def __init__(self, filename):
@@ -89,5 +87,21 @@ class Conversion:
                 raise ("Letter '%s' is not here" % letter )
                 pass
         
-        print (self.brailleString)
         return self.brailleString
+
+    def toActuations(self):
+        self.actlist=[]
+
+        self.actlist.append([0,0,0,0,0,0]) for i in range(0, len(self.brailleString))
+
+        for (i, item) in enumerate(self.brailleString):
+            if item:
+                self.actlist[i][item].append(1)
+
+        print self.actlist
+
+                
+
+
+
+            

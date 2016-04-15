@@ -1,4 +1,3 @@
-
 # coding: utf-8
 
 import os
@@ -6,16 +5,11 @@ import re
 import pandas as pd
 
 class Conversion:
-    def __init__(self, filename):
-        #Open the specified file containing the text to be converted into braille representation
-        filepath = os.path.join(os.getcwd(), filename)
-        with open(filepath, 'r+') as f:
-            self.text = f.read()
+    def __init__(self, message):
         
-        #Create a list containing the individual letters in the sample text
         self.letters = []
-        for line in self.text:
-            self.letters.append(str(line))
+        for letter in message:
+            self.letters.append(str(letter))
     
     def toDots(self):
         self.charactersToDots = {
@@ -91,3 +85,36 @@ class Conversion:
         
         print (self.brailleString)
         return self.brailleString
+    
+    
+    def toActuations(self):
+        self.actlist  = []
+        self.sol0 = []
+        self.sol1 = []
+        self.sol2 = []
+        
+        for i in range(0, len(self.brailleString)):
+            self.actlist.append([0,0,0,0,0,0])
+        
+        for n, i in enumerate(self.brailleString):
+            if len(i) > 0:
+                for x, y in enumerate(i):
+                    self.actlist[n][y] = 1
+        
+        for n, i in enumerate(self.actlist):
+            for x, y in enumerate(i):
+                x_int = int(x)
+                if x_int == 0:
+                    self.sol0.append(y)
+                elif x_int == 1:
+                    self.sol0.append(y)
+                elif x_int == 2:
+                    self.sol1.append(y)
+                elif x_int == 3:
+                    self.sol1.append(y)
+                elif x_int == 4:
+                    self.sol2.append(y)
+                else:
+                    self.sol2.append(y)
+                    
+        return self.sol0, self.sol1, self.sol2

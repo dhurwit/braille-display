@@ -2,7 +2,6 @@
 
 import os
 import re
-import pandas as pd
 
 
 class Conversion:
@@ -134,6 +133,17 @@ class Conversion:
             if i == 1:
                 self.sol2[n] = True
             else: 
-                self.sol2[n] = False                    
-                    
+                self.sol2[n] = False 
+        
+        for i in range (0,20):
+            self.sol0.append(False)
+
+        for i in range (0,10):
+            self.sol1.insert(i, False)
+            self.sol1.append(False)
+
+        for i in range (0,20):
+            self.sol2.insert(i, False)
+        
+        
         return self.sol0, self.sol1, self.sol2
